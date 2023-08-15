@@ -8,3 +8,12 @@ const carrito = [
     { nombre: 'Teclado', precio: 400 },
     { nombre: 'Celular', precio: 700 },
 ]
+
+
+// En un arreglode objetos se utiliza .some
+const existe = carrito.some( producto => producto.nombre === 'Tablet');
+console.log(existe);
+
+// En un arreglo tradicional con .some
+const existe2 = meses.some( mes => mes === 'Mayo');
+console.log(existe2);
