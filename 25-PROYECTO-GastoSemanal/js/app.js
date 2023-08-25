@@ -8,6 +8,8 @@ const gastoListado = document.querySelector('#gastos ul');
 eventListeners();
 function eventListeners() {
     document.addEventListener('DOMContentLoaded', preguntarPresupuesto);
+
+    formulario.addEventListener('submit', agregarGasto)
 }
 
 
@@ -52,4 +54,20 @@ function preguntarPresupuesto() {
     console.log(presupuesto);
 
     ui.insertarPresupuesto(presupuesto);
+}
+
+
+// Añade gastos
+function agregarGasto(e) {
+    e.preventDefault();
+
+
+    // Leer los datos del formulario
+    const nombre = document.querySelector('#gasto').value;
+    const cantidad = document.querySelector('#cantidad').value;
+
+    // Validar
+    if(nombre === '' || cantidad === '') {
+        console.log('Ambos campos son obligatorios');
+    }
 }
