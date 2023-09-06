@@ -9,14 +9,14 @@ window.onload = () => {
 function validarFormulario(e) {
     e.preventDefault();
 
-    const terminoBusqueda = document.querySelector('#termino').value;
+    const termino = document.querySelector('#termino').value;
 
-    if(terminoBusqueda === '') {
+    if(termino === '') {
         mostrarAlerta('Agregue un término de búsqueda');
         return;
     }
 
-    buscarImagenes(terminoBusqueda);
+    buscarImagenes(termino);
 }
 
 function mostrarAlerta(mensaje) {
@@ -53,5 +53,32 @@ function buscarImagenes(termino) {
 }
 
 function mostrarImagenes(imagenes) {
-    console.log(imagenes);
+    while(resultado.firstChild) {
+        resultado.removeChild(resultado.firstChild);
+    }
+
+    // Iterar sobre el arreglo de imagenes y construir el HTML
+    imagenes.forEach( imagen => {
+        const { previewURL, likes, views, largeImageURL } = imagen;
+
+        resultado.innerHTML = `
+            <div class="w-1/2 md:w-1/3 lg:w1/4 p-3 mb-4">
+                <div class="bg-white">
+                    <img class="w-full" src="${previewURL}">
+
+                    <div class="p-4">
+                        <p class="font-bold"> ${likes} <span class="font-light">Me Gusta</span></p>
+                        <p class="font-bold"> ${views} <span class="font-light">Vistas</span></p>
+
+                        <a
+                            class="block w-full bg-blue-800 hover:bg-blue-500 text-white uppercase font-bold text-center rounded mt-5 p-1"
+                            href="${largeImageURL}" target="_blank" rel="noopener noreferrer"
+                        >
+                            Ver Imagen
+                        </a>    
+                    </div>
+                </div>
+            </div>
+        `;
+    })
 }
