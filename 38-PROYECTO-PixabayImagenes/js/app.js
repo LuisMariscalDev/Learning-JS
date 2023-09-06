@@ -9,7 +9,7 @@ window.onload = () => {
 function validarFormulario(e) {
     e.preventDefault();
 
-    const termino = document.querySelector('#termino').value;
+    // const termino = document.querySelector('#termino').value;
 
     if(termino === '') {
         mostrarAlerta('Agregue un término de búsqueda');
@@ -41,7 +41,8 @@ function mostrarAlerta(mensaje) {
 
 }
 
-function buscarImagenes(termino) {
+function buscarImagenes() {
+    const termino = document.querySelector('#termino').value;
     const key = '39256726-4ea7d53f06a217c42ecc48dd4';
     const url = `https://pixabay.com/api/?key=${key}&q=${termino}`;
 
