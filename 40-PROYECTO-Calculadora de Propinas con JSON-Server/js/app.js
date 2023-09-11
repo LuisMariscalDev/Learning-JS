@@ -94,6 +94,12 @@ function mostrarPlatillos(platillos){
         inputCantidad.id = `producto-${platillo.id}`;
         inputCantidad.classList.add('form-control');
 
+        // Función que detecta la cantidad y el platillo que se está agregando
+        inputCantidad.onchange = function() {
+            const cantidad = parseInt( inputCantidad.value );
+            agregarPlatillo({...platillo, cantidad});
+        }
+
         const agregar = document.createElement('div');
         agregar.classList.add('col-md-2');
         agregar.appendChild(inputCantidad);
@@ -105,4 +111,34 @@ function mostrarPlatillos(platillos){
 
         contenido.appendChild(row);
     })
+}
+
+function agregarPlatillo(producto) {
+    // Extraer el pedido actual
+    let { pedido } = cliente;
+
+    // Revisar que la cantidad sea mayor a 0
+    if(producto.cantidad > 0) {
+       
+        // Comprueba si el elemento ya existe en el carrito
+        if( pedido.some( articulo => articulo.id === producto.id)) {
+            // El articulo ya existe, actualicemos la cantidad
+            const pedidoActualizado = pedido.map( articulo => {
+                if( articulo.id === producto.id ){
+                    articulo.cantidad = producto.cantidad;
+                }
+                return articulo;
+            });
+            // Se asigna el nuevo array a cliente.pedido
+            cliente.pedido = [...pedidoActualizado];
+        } else {
+            // El articulo no existe, lo agregamos al array del pedido
+            cliente.pedido = [...pedido, producto];
+        }
+    } else {
+        // Eliminar elementos cuando la cantidad es 0
+        const resultado = pedido.filter( articulo => articulo.id !== producto.id);
+        cliente.pedido = [...resultado];
+    }
+    console.log(cliente.pedido);
 }
