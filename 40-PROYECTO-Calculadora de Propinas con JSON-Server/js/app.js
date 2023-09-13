@@ -205,15 +205,6 @@ function actualizarResumen() {
         cantidadValor.classList.add('fw-normal');
         cantidadValor.textContent = cantidad;
 
-        // Subtotal del articulo
-        const subtotalEl = document.createElement('p');
-        subtotalEl.classList.add('fw-bold');
-        subtotalEl.textContent = 'Subtotal: ';
-        
-        const subtotalValor = document.createElement('span');
-        subtotalValor.classList.add('fw-normal');
-        subtotalValor.textContent = calcularSubtotal(precio, cantidad);
-
         // Precio del articulo
         const precioEl = document.createElement('p');
         precioEl.classList.add('fw-bold');
@@ -222,6 +213,25 @@ function actualizarResumen() {
         const precioValor = document.createElement('span');
         precioValor.classList.add('fw-normal');
         precioValor.textContent = `$${precio}`;
+
+        // Subtotal del articulo
+        const subtotalEl = document.createElement('p');
+        subtotalEl.classList.add('fw-bold');
+        subtotalEl.textContent = 'Subtotal: ';
+                
+        const subtotalValor = document.createElement('span');
+        subtotalValor.classList.add('fw-normal');
+        subtotalValor.textContent = calcularSubtotal(precio, cantidad);
+
+        // Boton para eliminar
+        const btnEliminar = document.createElement('button');
+        btnEliminar.classList.add('btn', 'btn-danger');
+        btnEliminar.textContent = 'Eliminar del Pedido';
+
+        // Función para eliminar del pedido
+        btnEliminar.onclick = function() {
+            eliminarProducto(id)
+        }
 
         // Agregar valores a sus contenedores
         cantidadEl.appendChild(cantidadValor);
@@ -233,6 +243,7 @@ function actualizarResumen() {
         lista.appendChild(cantidadEl);
         lista.appendChild(precioEl);
         lista.appendChild(subtotalEl);
+        lista.appendChild(btnEliminar);
 
         // Agregar lista al grupo principal
         grupo.appendChild(lista)
@@ -257,4 +268,16 @@ function limpiarHTML() {
 
 function calcularSubtotal(precio, cantidad) {
     return `$${precio * cantidad}`
+}
+
+function eliminarProducto(id){
+    const {pedido} = cliente;
+    const resultado = pedido.filter( articulo => articulo.id !== id);
+    cliente.pedido = [...resultado];
+
+    // Limpiar el HTML previo
+    limpiarHTML();
+
+    // Mostrar resumen
+    actualizarResumen();
 }
