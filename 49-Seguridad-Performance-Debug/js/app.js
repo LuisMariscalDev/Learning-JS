@@ -37,6 +37,8 @@ function consultarCriptomonedas() {
 // llena el select 
 function selectCriptomonedas(criptomonedas) {
 
+    const inicio = performance.now(); // Performance.now() te permite saber el tiempo de ejecución de un bloque de código
+
     criptomonedas.forEach( cripto => {
         const { FullName, Name } = cripto.CoinInfo;
         const option = document.createElement('option');
@@ -46,10 +48,14 @@ function selectCriptomonedas(criptomonedas) {
         criptomonedasSelect.appendChild(option);
     });
 
+    const fin = performance.now();
+
+    console.log( fin - inicio );
+
 }
 
 
-function leerValor(e)  {
+function leerValor(e) {
     objBusqueda[e.target.name] = e.target.value;
 }
 
