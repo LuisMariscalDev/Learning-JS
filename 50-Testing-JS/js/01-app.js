@@ -11,17 +11,29 @@ function restar(a,b) {
 let resultado = sumar(2,2);
 let esperado = 4;
 
-if(resultado !== esperado) {
-    console.log(`El ${resultado} es diferente a lo esperado`);
-} else {
-    console.log(`La prueba corrió sin problema`);
-}
+expected(esperado).toBe(resultado);
 
-resultado = restar(100,5);
+resultado = restar(10,4);
 esperado = 5;
 
-if(resultado !== esperado) {
-    console.log(`El ${resultado} es diferente a lo esperado`);
-} else {
-    console.log(`La prueba corrió sin problema`);
+expected(esperado).toBe(resultado);
+expected(esperado).toEqual(resultado);
+
+function expected( esperado ) {
+    return {
+        toBe ( resultado) {
+            if(resultado !== esperado) {
+                console.log(`El ${resultado} es diferente a lo esperado`);
+            } else {
+                console.log(`La prueba corrió sin problema`);
+            }
+        },
+        toEqual(resultado) {
+            if(resultado !== esperado) {
+                console.log(`El ${resultado} es diferente a lo esperado`);
+            } else {
+                console.log(`La prueba corrió sin problema`);
+            }
+        }
+    }
 }
